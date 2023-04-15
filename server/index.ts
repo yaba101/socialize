@@ -5,7 +5,7 @@ import cors from 'cors'
 import { ZodError, z } from 'zod'
 import * as fs from 'fs/promises'
 
-
+const PORT = process.env.PORT || 5000
 
 const userSchema = z.object({
     username: z.string(),
@@ -71,6 +71,6 @@ app.post('/signup', async (req: Request, res: Response) => {
     }
 })
 
-app.listen(5000, () => {
-    console.log('Server started on port 3000')
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`)
 })
