@@ -22,5 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 
 ./server/users.json
+=======
+>>>>>>> 08c7a15cb5b38513675f2b3e58303d8ed89a805b
