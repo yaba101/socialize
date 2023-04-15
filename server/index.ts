@@ -2,7 +2,7 @@
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import { z } from 'zod'
+import { ZodError, z } from 'zod'
 import * as fs from 'fs/promises'
 
 
@@ -62,13 +62,15 @@ app.post('/signup', async (req: Request, res: Response) => {
             })
         }
     } catch (error) {
-        res.status(400).send({
-            success: false,
-            message: error.message,
-        })
+        if (error instanceof ZodError) {
+            res.status(400).send({
+                success: false,
+                message: error.message,
+            })
+        }
     }
 })
 
-app.listen(3000, () => {
+app.listen(5000, () => {
     console.log('Server started on port 3000')
 })
