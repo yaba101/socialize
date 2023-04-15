@@ -5,8 +5,8 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../components/AuthProvider'
 import { useContext } from 'react'
+import { AuthContext } from '../components/AuthProvider'
 
 type FormData = {
 	username: string
@@ -19,7 +19,8 @@ const schema = z.object({
 })
 
 const LoginPage = () => {
-	const { login } = useContext(AuthContext)
+	const { setIsLoggedIn } = useContext(AuthContext)
+
 	const navigate = useNavigate()
 	const { register, handleSubmit, formState } = useForm<FormData>({
 		resolver: zodResolver(schema),
@@ -33,8 +34,8 @@ const LoginPage = () => {
 		try {
 			await axios.post('http://localhost:5000/login', data)
 			toast.success('Login successful!')
-			// pass the username to login function
-			login(data.username)
+			setIsLoggedIn(true)
+			localStorage.setItem('username', data.username)
 			navigate('/dashboard')
 		} catch (err) {
 			toast.error('Login failed. Please try again.')

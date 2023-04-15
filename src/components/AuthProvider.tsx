@@ -2,19 +2,17 @@ import React, { createContext, useState } from 'react'
 
 type AuthContextType = {
 	isLoggedIn: boolean
-	login: (username: string) => void
 	logout: () => void
-	username: string
+	setIsLoggedIn: (value: boolean) => void
 }
 
 const initialAuthContext: AuthContextType = {
 	isLoggedIn: false,
-	login: (username = '') => {},
 	logout: () => {},
-	username: '',
+	setIsLoggedIn: () => {},
 }
 
-export const AuthContext = createContext(initialAuthContext)
+export const AuthContext = createContext<AuthContextType>(initialAuthContext)
 
 export const AuthContextProvider = ({
 	children,
@@ -22,20 +20,12 @@ export const AuthContextProvider = ({
 	children: React.ReactNode
 }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
-
-	const [username, setUsername] = useState('')
-
-	const login = (username: string) => {
-		setIsLoggedIn(true)
-		setUsername(username)
-	}
 	const logout = () => {
 		setIsLoggedIn(false)
-		setUsername('')
 	}
 
 	return (
-		<AuthContext.Provider value={{ isLoggedIn, login, logout, username }}>
+		<AuthContext.Provider value={{ isLoggedIn, logout, setIsLoggedIn }}>
 			{children}
 		</AuthContext.Provider>
 	)
