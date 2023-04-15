@@ -1,12 +1,14 @@
 import { useContext } from 'react'
 import { AuthContext } from '../components/AuthProvider'
 import { Navigate } from 'react-router-dom'
+import Avatar from '../components/Avatar'
 
 const Dashboard = () => {
 	const { isLoggedIn, logout, username } = useContext(AuthContext)
 	if (!isLoggedIn) return <Navigate to='/login' />
 	return (
 		<div className='flex flex-col items-center justify-center'>
+			<Avatar username={username} size='lg' className='mr-4' />
 			<h1 className='mb-10 text-2xl font-bold text-gray-200'>
 				Welcome to the Home Page, {username}!
 			</h1>
